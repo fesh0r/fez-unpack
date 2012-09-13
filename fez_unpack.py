@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 
+"""
+Extract FEZ .pak files
+"""
+
+import sys
 import os
+
 from binstream import BinaryReader
 
 
@@ -15,15 +21,19 @@ def unpack(src, dest):
             print '"%s" : %d' % (filename, filesize)
             filename = os.path.join(dest, filename) + '.xnb'
             filedir, _, _ = filename.rpartition('\\')
-            if filedir and not os.path.exists(filedir):
-                os.makedirs(filedir)
+            if filedir:
+                filedir = os.path.normpath(filedir)
+                if not os.path.isdir(filedir):
+                    os.makedirs(filedir)
             with open(filename, 'wb') as out_file:
                 out_file.write(filedata)
 
 
 def main():
-    unpack('Essentials.pak', 'out_e')
-    unpack('Other.pak', 'out_o')
+    if len(sys.argv) == 3:
+        unpack(sys.argv[1], sys.argv[2])
+    else:
+        print 'fez_unpack.py in.pak out_dir'
 
 
 if __name__ == '__main__':

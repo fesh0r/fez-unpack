@@ -1,3 +1,7 @@
+"""
+.NET BinaryStream reader
+"""
+
 import struct
 
 

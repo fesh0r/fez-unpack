@@ -1,1 +1,3 @@
-#
+"""
+Extract FEZ .pak files
+"""
